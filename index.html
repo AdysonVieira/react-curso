@@ -15,46 +15,37 @@
     <div id="app"></div>
     
     <script type="text/babel">
-        const luana = {
-            cliente: 'Luana',
-            idade: 27,
-            compras: [
-                { nome: 'Notebook', preco: 'R$ 2500' },
-                { nome: 'Geladeira', preco: 'R$ 3000' },
-                { nome: 'Smartphone', preco: 'R$ 1500' },
-            ],
-            ativa: true,
-        };
-
-        const mario = {
-            cliente: 'Mario',
-            idade: 31,
-            compras: [
-                { nome: 'Notebook', preco: 'R$ 2500' },
-                { nome: 'Geladeira', preco: 'R$ 3000' },
-                { nome: 'Smartphone', preco: 'R$ 1500' },
-                { nome: 'Guitarra', preco: 'R$ 3500' },
-            ],
-            ativa: false,
-        };
-
+        const produtos = [
+            {
+                id: 1,
+                nome: 'Smartphone',
+                preco: 'R$ 2000',
+                cores: ['#29d8d5', '#252a34', '#fc3766'],
+            },
+            {
+                id: 2,
+                nome: 'Notebook',
+                preco: 'R$ 3000',
+                cores: ['#ffd045', '#d4394b', '#f37c59'],
+            },
+            {
+                id: 3,
+                nome: 'Tablet',
+                preco: 'R$ 1500',
+                cores: ['#365069', '#47c1c8', '#f95786'],
+            },
+        ];
+        
         const App = () => {
-            const dados = luana;
-            const {cliente, idade, compras} = dados
-            const total = compras
-                .map( (compra) => +compra.preco.replace('R$ ','') )
-                .reduce( (acc, preco) => acc + preco, 0 )
-
             return (
-                <div>
-                    <p>Cliente: {cliente}</p>
-                    <p>Idade: {idade}</p>
-                    <p>Situação: <span style={ {color: total < 10000 ? 'green' : 'red'} }>{(total < 10000) ? 'Ativa' : 'Inativa'}</span></p>
-                    <p>Total de Gastos: R${total}</p>
-                    {total > 10000 && <p>Você está gastando demais</p>}
-
-                </div>
-            )
+                <section>
+                    <ul>
+                        {produtos.forEach( ({ id, nome, preco, cores }) => {
+                            return <li>{nome}</li>
+                        })}
+                    </ul>
+                </section>
+            );
         };
 
         ReactDOM.render(<App />, document.getElementById('app'))
