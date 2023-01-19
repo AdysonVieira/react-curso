@@ -186,7 +186,19 @@ const Form3 = () => {
 
 
 
-//
+// STYLE ######################
+// O style irá receber um objeto com as propriedades do elemento em camelCase
+const Estilo = () => {
+    const estilo = {
+        color: 'blue',
+        fontSize: '16px',
+        fontfamily: 'Helvetica'
+    }
 
-
-
+    return (
+        <div>
+            <p style={ estilo }>Meu Texto</p>
+            <p style={ {color: 'green' } }>Meu Texto</p>
+        </div>
+    )
+}
