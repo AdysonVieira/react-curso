@@ -1,7 +1,7 @@
 // ESTADO ############
 // O estado de uma aplicação representa as características dela naquele momento. Por exemplo: os dados do usuário foram carregados, o botão está ativo, o usuário está na página de contato e etc.
 
-import { useState } from "react";
+import React, { useState } from "react";
 
 const App = () => {
     const ativo = true;
@@ -45,7 +45,7 @@ const App3 = () => {
 
     const handleClick = () => {
         setAtivo(!ativo);
-        setContar(1)
+        setContar((contar) => contar + 1)
         setDados({ ...dados, sobrenome: 'Vieira' })   
     }
 
@@ -66,6 +66,102 @@ const App4 = () => {
             <p>{ativo ? 'Modal Aberto' : 'Modal Fechado'}</p>
             <Modal ativo={ativo} setAtivo={setAtivo}/>
             <ButtonOpenModal setAtivo={setAtivo}/>
+        </div>
+    )
+}
+
+
+
+// Reatividade
+// Não modificar o estado diretamente. Utilize sempre a função de atualização do estado, pois ela que garante a reatividade dos componentes
+
+const App5 = () => {
+    const [items, setItems] = React.useState(['Item 1', 'Item 2']);
+
+    function handleClick() {
+        // Errado! Não podemos modificar diretamente o estado
+        items.push('Novo item');
+    }
+
+    function handleClickReativo() {
+        setItems([ ...items, 'Novo Item']);
+    }
+}
+
+
+
+// Callback
+// Podemos passar uma função de callback para atualizar o estado. A função de callback recebe um parâmetro que representa o valor anterior e irá modificar o estado para o valor que for retornado na função.
+
+const App6 = () => {
+    const [ativo, setAtivo] = React.useState(true);
+
+    function handleClick() {
+        // usando um callback | anterior é o valor ativo
+        setAtivo((anterior) => !anterior)
+    }
+
+    return (
+        <button onClick={handleClick}>
+            {ativo ? 'Botão Ativo' : 'Botão Inativo'}
+        </button>
+    )
+}
+
+const ButtonModal = ({ setAtivo }) => {
+    function handleClick() {
+        setAtivo((ativo) => !ativo)
+    }
+
+    return <button onClick={handleClick}>Abrir</button>
+}
+
+
+// ============
+
+const App7 = () => {
+    // passando um callback para o valor inicial de ativo, no exemplo buscando no localStorage e retornando como o valor incial
+    const [ativo, setAtivo] = React.useState(() => {
+        const ativo = window.localStorage.getItem('ativo');
+        return ativo
+    });
+
+    function handleClick() {
+        // usando um callback | anterior é o valor ativo
+        setAtivo((anterior) => !anterior)
+    }
+
+    return (
+        <button onClick={handleClick}>
+            {ativo ? 'Botão Ativo' : 'Botão Inativo'}
+        </button>
+    )
+}
+
+
+
+
+
+// React.strictMode
+// No modo restrito o componente atualizado por uma state é renderizado duas vezes, afim de garantir a identificação de funções com efeitos colaterais (side effects) e eliminarmos as mesmas. Função com efeito colateral é aquela que modifica o estado que estão fora dela.
+
+const App8 = () => {
+    let [contar, setContar] = React.useState(1);
+    const [items, setItems] = React.useState(['Item 1']);
+    
+    function handleClick() {
+        setContar((contar) => {
+            // Errado, efeito colateral | Uma função que altera o state deve ser restrita apenas a função de alterar o o estado, sem executar outras funções
+            setItems((items) => [ ...items, 'Item ' + (contar + 1)] ) 
+            return contar + 1
+        })
+        setItems([ ...items, 'Item ' + (contar + 1)] ) // Forma correta
+    }
+
+    return ( 
+        <div>
+            {items.map( (item) => <li key={item}>{item}</li>)}
+            <button onClick={handleClick}>Clique</button>
         </div>
     )
 }
