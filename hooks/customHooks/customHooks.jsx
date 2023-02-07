@@ -44,23 +44,34 @@ const useFetch = () => {
     return {data, error, loading, request}
 }
 
+
+
+
+
+// useForm ###############
+// useForm.jsx
 const types = {
     cep: {
         regex: /\d{5}-?\d{3}/,
         message: 'Cep inválido',
     },
+    email: {
+        regex: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+        message: 'Digite um email válido',
+    }
 }
 
-// useForm ###############
-const useForm = (value) => {
+const useForm = (type) => {
     const [value, setValue] = React.useState('')
     const [error, setError] = React.useState(null)
 
     function validate(value) {
+        if (type === false) return true;
+
         if (value.length === 0) {
-            setError()
+            setError('Preencha um valor')
             return false
-        } else if (!types[type].regex.test(value)) {
+        } else if (!types[type]?.regex.test(value)) {
             setError(types[type].message)
             return false
         } else {
@@ -70,7 +81,9 @@ const useForm = (value) => {
     }
 
     function onChange(event) {
-        if (error) validate(event.target.value)
+        if (error) {
+            validate(event.target.value)
+        }
         setValue(event.target.value)
     }
 
@@ -80,15 +93,28 @@ const useForm = (value) => {
         error,
         onChange,
         onBlur: () => validate(value),
+        validate: () => validate(value)
     };
 }
 
 
 // -----------------
-
+// App
 const AppForm = () => {
-    const { cep, setCep } = useForm(cep);
-    [error, setError] = React.useState(null);
+    const cep = useForm('cep');
+    const email = useForm('email');
+    const nome = useForm();
+    const sobrenome = useForm(false);
+
+    function handleSubmit(event) {
+        event.preventDefault();
+        if (cep.validate() && email.validate() && nome.validate()) {
+            // fetch para envio do dado
+            console.log('Enviou')
+        } else {
+            console.log('Não enviou')
+        }
+    }
 
     return (
         <form onSubmit={handleSubmit}>
@@ -96,9 +122,34 @@ const AppForm = () => {
             <input 
                 type="text" 
                 id="cep" 
-                value={cep} 
+                { ...cep }
             />
-            {error && <p>{error}</p>}
+            {cep.error && <p>{cep.error}</p>}
+            
+            <label htmlFor="email">CEP</label>
+            <input 
+                type="text" 
+                id="email" 
+                { ...email }
+            />
+            {email.error && <p>{email.error}</p>}
+            
+            <label htmlFor="nome">CEP</label>
+            <input 
+                type="text" 
+                id="nome" 
+                { ...nome }
+            />
+            {nome.error && <p>{nome.error}</p>}
+            
+            <label htmlFor="sobrenome">CEP</label>
+            <input 
+                type="text" 
+                id="sobrenome" 
+                { ...sobrenome }
+            />
+            {sobrenome.error && <p>{sobrenome.error}</p>}
+            
             <button>Enviar</button>
         </form>
     )
