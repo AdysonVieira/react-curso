@@ -3,8 +3,8 @@ import React from 'react'
 const Radio = ({ options, value, setValue, ...props }) => {
     
     return (
-        <div>
-            <h1>{props.pergunta}</h1>
+        <fieldset>
+            <legend>{props.pergunta}</legend>
             {options.map((option) => (
                 <label key={option}>
                     <input
@@ -16,7 +16,7 @@ const Radio = ({ options, value, setValue, ...props }) => {
                     {option}
                 </label>
             ))}
-        </div>
+        </fieldset>
     )
 }
 
