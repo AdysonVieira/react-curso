@@ -1,0 +1,25 @@
+.container {
+    overflow-x: hidden;
+
+}
+
+.content {
+    display: flex;
+    transition: transform 0.3s ease-out;
+}
+
+.item {
+    flex-shrink: 0;
+    width: 80vw;
+    height: 50vh;
+    margin: 0 10vw;
+
+    background: #ccc;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem 10vw;
+}
+
