@@ -6,7 +6,7 @@ const Header = () => {
         <nav>
             <NavLink to='/' end activeStyle={{ color: "tomato" }}>Home</NavLink>{'  '}
             <NavLink to='sobre' end activeStyle={{ color: "tomato" }}>Sobre</NavLink>{'  '}
-            <NavLink to='produto' end activeStyle={{ color: "tomato" }}>Produto</NavLink>
+            <NavLink to='produtos' end activeStyle={{ color: "tomato" }}>Produto</NavLink>
         </nav>
     )
 }

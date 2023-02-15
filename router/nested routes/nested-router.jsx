@@ -16,7 +16,25 @@ const App = () => {
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='sobre' element={<Sobre />} />
-                <Route path='produto' element={<Produto />} />
+                <Route path='produto/:id/*' element={<Produto />} />
+            </Routes>
+        </BrowserRouter>
+    )
+}
+
+
+// Usando o Outlet
+const App2 = () => {
+    return (
+        <BrowserRouter>
+            <Header />
+            <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='sobre' element={<Sobre />} />
+                <Route path='produto/:id' element={<Produto />}>
+                    <Route path='' element={<ProdutoDescricao />} />
+                    <Route path='avaliacao' element={<ProdutoAvaliacao />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     )
