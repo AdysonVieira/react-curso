@@ -7,7 +7,7 @@ import Produto from './Produto';
 
 const App = () => {
 
-    // Hook que retorna um objeto com pathname, serach e outras propriedades
+    // Hook que retorna um objeto com pathname, search e outras propriedades
     const location = useLocation();
 
     // Roda toda vez que a rota é modificada
